@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <h3>매출전표등록</h3>
 
 <form action="action/insert_sales_slip.jsp" method="post" name="action_form">
@@ -31,7 +32,7 @@
 							
 							while(rs.next()){
 								%>
-									<option value="<%=rs.getString(1)%>"><%=String.format("[%s] %s", rs.getString(1), rs.getString(2) %></option>
+									<option value="<%=rs.getString(1)%>"><%=String.format("[%s] %s", rs.getString(1), rs.getString(2)) %></option>
 								<% 
 							}
 							stmt.close();
@@ -50,8 +51,8 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<input type="button" value="전표등록" onclick="submit_form">
-				<input type="button" value="다시쓰기" onclick="reset_form">
+				<input type="button" value="전표등록" onclick="submit_form()">
+				<input type="button" value="다시쓰기" onclick="reset_form()">
 			</td>
 		</tr>
 	</table>
@@ -72,6 +73,10 @@ function submit_form() {
 	if(document.action_form.sales_date.value === ""){
 		alert("판매일자가 입력되지 않았습니다!")
 		document.action_form.sales_date.focus();
+		return;
+	}
+	if(document.action_form.pizza.selectIndex === ""){
+		alert("피자코드가 입력되지 않았습니다!")
 		return;
 	}
 	if(document.action_form.sales_amount.value === ""){
